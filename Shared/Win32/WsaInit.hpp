@@ -5,10 +5,10 @@ class WsaInit
 public:
 	WsaInit();
 	~WsaInit();
-	bool Initialized() const;
-	operator bool() const;
+	int Status() const;
+	bool IsInitialized() const;
 
 private:
 	WSADATA m_data = { 0 };
-	const int m_status;
+	int m_status;
 };

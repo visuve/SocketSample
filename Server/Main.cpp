@@ -5,10 +5,10 @@ int main(int, char**)
 #if defined(_WIN32) || defined(_WIN64)
 	WsaInit guard;
 
-	if (!guard)
+	if (!guard.IsInitialized())
 	{
 		CERR << "Failed to initialize Winsock";
-		return 1;
+		return guard.Status();
 	}
 #endif
 

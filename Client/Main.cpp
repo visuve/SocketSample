@@ -5,14 +5,13 @@ int main(int, char**)
 #if defined(_WIN32) || defined(_WIN64)
 	WsaInit guard;
 
-	if (!guard)
+	if (!guard.IsInitialized())
 	{
 		CERR << "Failed to initialize Winsock";
-		return 1;
+		return guard.Status();
 	}
 #endif
 
-	constexpr char node[] = "127.0.0.1";
 	constexpr char service[] = "http";
 
 	const AddressInfo info = AddressInfo::ClientTcpAddressInfo(nullptr, service);

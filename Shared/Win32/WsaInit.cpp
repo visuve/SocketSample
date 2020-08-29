@@ -5,7 +5,7 @@
 WsaInit::WsaInit() :
 	m_status(WSAStartup(MAKEWORD(2, 2), &m_data))
 {
-	if (!Initialized())
+	if (!IsInitialized())
 	{
 		CERR << "WSAStartup failed with error: " << m_status;
 	}
@@ -13,23 +13,23 @@ WsaInit::WsaInit() :
 
 WsaInit::~WsaInit()
 {
-	if (Initialized())
+	if (IsInitialized())
 	{
-		const int status = WSACleanup();
+		m_status = WSACleanup();
 
-		if (status != 0)
+		if (m_status != 0)
 		{
-			CERR << "WSAStartup failed with error: " << status << '/' << WSAGetLastError();
+			CERR << "WSAStartup failed with error: " << m_status << '/' << WSAGetLastError();
 		}
 	}
 }
 
-bool WsaInit::Initialized() const
+int WsaInit::Status() const
 {
-	return m_status == 0;
+	return m_status;
 }
 
-WsaInit::operator bool() const
+bool WsaInit::IsInitialized() const
 {
-	return Initialized();
+	return Status() == 0;
 }
