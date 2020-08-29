@@ -12,7 +12,7 @@ int main(int, char**)
 	}
 #endif
 
-	constexpr char service[] = "http";
+	constexpr char service[] = "8444";
 
 	const AddressInfo info = AddressInfo(nullptr, service, AddressInfo::ClientHints);
 
