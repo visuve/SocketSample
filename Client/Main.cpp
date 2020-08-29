@@ -14,7 +14,7 @@ int main(int, char**)
 
 	constexpr char service[] = "http";
 
-	const AddressInfo info = AddressInfo::ClientTcpAddressInfo(nullptr, service);
+	const AddressInfo info = AddressInfo(nullptr, service, AddressInfo::ClientHints);
 
 	if (!info)
 	{
