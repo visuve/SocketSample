@@ -29,7 +29,7 @@ int main(int, char**)
 		return -1;
 	}
 
-	while (client)
+	while (client.IsValid())
 	{
 		if (!client.Send("HELLO"))
 		{

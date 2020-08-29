@@ -37,13 +37,13 @@ int main(int, char**)
 			return -2;
 		}
 
-		if (!client.Accept(server, ShutdownSend))
+		if (!client.Accept(server.Descriptor(), ShutdownSend))
 		{
 			return -3;
 		}
 	}
 
-	while (client)
+	while (client.IsValid())
 	{
 		std::string data;
 

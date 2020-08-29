@@ -72,7 +72,7 @@ bool ClientSocket::Accept(SocketDescriptor socket, int closeFlags)
 
 	m_socket = accept(socket, nullptr, nullptr);
 
-	if (!IsValidSocket(m_socket))
+	if (!IsValid())
 	{
 		CERR << "Failed to accept socket!";
 		return false;

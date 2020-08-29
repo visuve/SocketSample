@@ -8,12 +8,13 @@ public:
 	Socket();
 	virtual ~Socket();
 
-	operator SocketDescriptor() const;
+	SocketDescriptor Descriptor() const;
+	bool IsValid() const;
 	bool Receive(std::string& data, unsigned short limit = 0x1000) const;
 
 protected:
 	bool Create(const addrinfo* info);
-	void Close() const;
+	void Close();
 
 	SocketDescriptor m_socket = InvalidSocket;
 	int m_closeFlags = SocketError;

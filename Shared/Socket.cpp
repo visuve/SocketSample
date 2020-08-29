@@ -13,9 +13,18 @@ Socket::~Socket()
 	CLOG;
 }
 
-Socket::operator SocketDescriptor() const
+SocketDescriptor Socket::Descriptor() const
 {
 	return m_socket;
+}
+
+bool Socket::IsValid() const
+{
+#if defined(_WIN32) || defined(_WIN64)
+	return m_socket != INVALID_SOCKET;
+#else
+	return m_socket > 0;
+#endif
 }
 
 bool Socket::Create(const addrinfo* info)
@@ -24,7 +33,7 @@ bool Socket::Create(const addrinfo* info)
 
 	m_socket = socket(info->ai_family, info->ai_socktype, info->ai_protocol);
 
-	if (!IsValidSocket(m_socket))
+	if (!IsValid())
 	{
 		CERR << "Failed to initialize socket!";
 		return false;
@@ -72,9 +81,9 @@ bool Socket::Receive(std::string& data, unsigned short limit) const
 	return true;
 }
 
-void Socket::Close() const
+void Socket::Close()
 {
-	if (!IsValidSocket(m_socket))
+	if (!IsValid())
 	{
 		// No need to close
 		return;
@@ -92,8 +101,10 @@ void Socket::Close() const
 	if (CloseSocket(m_socket) == SocketError)
 	{
 		CERR << "Socket closed with error: " << LastError;
+		m_socket = InvalidSocket;
 		return;
 	}
 
+	m_socket = InvalidSocket;
 	COUT << "Closed";
 }
