@@ -29,14 +29,17 @@ int main(int, char**)
 		return -1;
 	}
 
+	size_t sentMessageCount = 0;
+
 	while (client.IsValid())
 	{
-		if (!client.Send("HELLO"))
+		if (!client.Send(sentMessageCount % 2 ? "FOO" : "BAR"))
 		{
 			return -2;
 		}
 
-		COUT << "Sent hello";
+		++sentMessageCount;
+		COUT << "Sent request";
 
 		std::string data;
 

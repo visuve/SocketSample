@@ -45,23 +45,38 @@ int main(int, char**)
 
 	while (client.IsValid())
 	{
-		std::string data;
+		std::string request;
 
-		if (!client.Receive(data))
+		if (!client.Receive(request))
 		{
 			CERR << "Failed to receive data from client!";
 			return -4;
 		}
 
-		COUT << "Received: " << data;
+		COUT << "Received: " << request;
 
-		if (!client.Send("WELCOME"))
+		std::string response;
+
+		if (request == "FOO")
 		{
-			CERR << "Failed to send greeting to client!";
+			response = "BAR";
+		}		
+		else if (request == "BAR")
+		{
+			response = "FOO";
+		}
+		else
+		{
+			response = "FUBAR";
+		}
+
+		if (!client.Send(response))
+		{
+			CERR << "Failed to send response to the client!";
 			return -5;
 		}
 
-		COUT << "Sent welcome";
+		COUT << "Sent response";
 	}
 
 	return 0;
