@@ -1,5 +1,20 @@
 #include "PCH.hpp"
 
+std::string GetResponse(const std::string& request)
+{
+	if (request == "FOO")
+	{
+		return "BAR";
+	}
+
+	if (request == "BAR")
+	{
+		return "FOO";
+	}
+
+	return "FUBAR";
+}
+
 int main(int, char**)
 {
 #if defined(_WIN32) || defined(_WIN64)
@@ -55,20 +70,7 @@ int main(int, char**)
 
 		COUT << "Received: " << request;
 
-		std::string response;
-
-		if (request == "FOO")
-		{
-			response = "BAR";
-		}		
-		else if (request == "BAR")
-		{
-			response = "FOO";
-		}
-		else
-		{
-			response = "FUBAR";
-		}
+		std::string response = GetResponse(request);
 
 		if (!client.Send(response))
 		{

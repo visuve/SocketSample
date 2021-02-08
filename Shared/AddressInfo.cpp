@@ -44,7 +44,7 @@ AddressInfo::~AddressInfo()
 
 bool AddressInfo::Initialized() const
 {
-	return m_status == 0;
+	return m_status == 0 && m_addressInfo != nullptr;
 }
 
 AddressInfo::operator bool() const
