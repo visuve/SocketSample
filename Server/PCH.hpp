@@ -2,6 +2,9 @@
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <Winsock2.h>
+#else
+#include <sys/types.h>
+#include <sys/socket.h>
 #endif
 
 // STL
