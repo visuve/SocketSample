@@ -12,13 +12,14 @@ int main(int, char**)
 	}
 #endif
 
-	constexpr char service[] = "8444";
+	constexpr char server[] = "localhost";
+	constexpr char port[] = "8444";
 
-	const AddressInfo info = AddressInfo(nullptr, service, AddressInfo::ClientHints);
+	const AddressInfo info = AddressInfo(server, port, AddressInfo::ClientHints);
 
 	if (!info)
 	{
-		CERR << "Failed to get address info for " << service;
+		CERR << "Failed to get address info for " << server;
 		return 1;
 	}
 

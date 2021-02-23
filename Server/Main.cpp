@@ -1,5 +1,13 @@
 #include "PCH.hpp"
 
+std::atomic<bool> keepRunning = true;
+
+void SignalHandler(int signal)
+{
+	COUT << "Received signal " << signal;
+	keepRunning = false;
+}
+
 std::string GetResponse(const std::string& request)
 {
 	if (request == "FOO")
@@ -17,6 +25,11 @@ std::string GetResponse(const std::string& request)
 
 int main(int, char**)
 {
+	if (std::signal(SIGINT, SignalHandler) == SIG_ERR)
+	{
+		CERR << "Cannot attach CTRL+C interrupt handler!";
+	}
+
 #if defined(_WIN32) || defined(_WIN64)
 	WsaInit guard;
 
@@ -58,7 +71,7 @@ int main(int, char**)
 		}
 	}
 
-	while (client.IsValid())
+	while (keepRunning && client.IsValid())
 	{
 		std::string request;
 

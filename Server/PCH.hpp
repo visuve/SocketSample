@@ -8,10 +8,12 @@
 #endif
 
 // STL
-#include <iostream>
-#include <string>
-#include <sstream>
+#include <atomic>
 #include <chrono>
+#include <csignal>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #include "ServerSocket.hpp"
 #include "ClientSocket.hpp"
