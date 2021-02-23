@@ -1,4 +1,5 @@
 #include "PCH.hpp"
+#include "../Shared/json.hpp"
 
 std::atomic<bool> keepRunning = true;
 
@@ -8,19 +9,31 @@ void SignalHandler(int signal)
 	keepRunning = false;
 }
 
-std::string GetResponse(const std::string& request)
+nlohmann::json GetResponse(const std::string& request)
 {
-	if (request == "FOO")
+	nlohmann::json response;
+
+	const auto now = std::chrono::system_clock::now();
+	const auto sinceEpoch = now.time_since_epoch();
+	const auto secondsSinceEpoch =
+		std::chrono::duration_cast<std::chrono::seconds>(sinceEpoch);
+
+	if (request == "give_weather")
 	{
-		return "BAR";
+		response["time"] = secondsSinceEpoch.count();
+		response["temperature"] = -7.0; // celcius
+		response["wind"] = 4.0; // meters per second
+		response["wind_direction"] = "NW";
+		response["dew_point"] = -8.0; // celcius
+		response["humidity"] = 93; // percent
+		response["rainfall"] = 0.1; // millimeters
+		response["visibility"] = 14000; // meters
+		response["cloudiness"] = "Cloudy";
+		response["air_pressure"] = 1024.6; // hPa
+		response["snow_depth"] = 440; // millimeters
 	}
 
-	if (request == "BAR")
-	{
-		return "FOO";
-	}
-
-	return "FUBAR";
+	return response;
 }
 
 int main(int, char**)
@@ -83,9 +96,10 @@ int main(int, char**)
 
 		COUT << "Received: " << request;
 
-		std::string response = GetResponse(request);
+		nlohmann::json responseObject = GetResponse(request);
+		std::string responseString = responseObject.dump();
 
-		if (!client.Send(response))
+		if (!client.Send(responseString))
 		{
 			CERR << "Failed to send response to the client!";
 			return -5;
