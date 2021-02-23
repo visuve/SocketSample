@@ -10,17 +10,42 @@ void SignalHandler(int signal)
 
 std::string GetResponse(const std::string& request)
 {
-	if (request == "FOO")
+	std::stringstream response;
+
+	if (request == "give_time")
 	{
-		return "BAR";
+		const auto now = std::chrono::system_clock::now();
+		const auto sinceEpoch = now.time_since_epoch();
+		const auto secondsSinceEpoch =
+			std::chrono::duration_cast<std::chrono::seconds>(sinceEpoch);
+
+		response << secondsSinceEpoch.count();
 	}
 
-	if (request == "BAR")
+	if (request == "give_weather")
 	{
-		return "FOO";
+		response << -7.0; // celcius
+		response << " ";
+		response << 4.0; // meters per second
+		response << " ";
+		response << "NW";
+		response << " ";
+		response << -8.0; // celcius
+		response << " ";
+		response << 93; // percent
+		response << " ";
+		response << 0.1; // millimeters
+		response << " ";
+		response << 14000; // meters
+		response << " ";
+		response << "Cloudy";
+		response << " ";
+		response << 1024.6; // hPa
+		response << " ";
+		response << 440; // millimeters
 	}
 
-	return "FUBAR";
+	return response.str();
 }
 
 int main(int, char**)

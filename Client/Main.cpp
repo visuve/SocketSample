@@ -34,7 +34,7 @@ int main(int, char**)
 
 	while (client.IsValid())
 	{
-		if (!client.Send(sentMessageCount % 2 ? "FOO" : "BAR"))
+		if (!client.Send(sentMessageCount % 2 ? "give_weather" : "give_time"))
 		{
 			return -2;
 		}
