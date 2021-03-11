@@ -15,9 +15,8 @@
 #include <sstream>
 #include <string>
 
-#include "ServerSocket.hpp"
-#include "ClientSocket.hpp"
 #include "AddressInfo.hpp"
+#include "Socket.hpp"
 #include "LogWrap.hpp"
 
 #if defined(_WIN32) || defined(_WIN64)

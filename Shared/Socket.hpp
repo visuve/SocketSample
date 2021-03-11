@@ -6,14 +6,23 @@ class Socket
 {
 public:
 	Socket();
-	virtual ~Socket();
+	~Socket();
 
-	SocketDescriptor Descriptor() const;
+	// Common
+	bool Create(const addrinfo* info);
 	bool IsValid() const;
+	SocketDescriptor Descriptor() const;
+	bool Send(const std::string& data) const;
 	bool Receive(std::string& data, unsigned short limit = 0x1000) const;
 
-protected:
-	bool Create(const addrinfo* info);
+	// Server
+	bool Bind(const addrinfo* info);
+	bool Listen() const;
+	bool Accept(SocketDescriptor socket, int closeFlags);
+
+	// Client
+	bool Connect(const addrinfo* info);
+	
 	void Close();
 
 	SocketDescriptor m_socket = InvalidSocket;

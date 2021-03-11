@@ -23,7 +23,7 @@ int main(int, char**)
 		return 1;
 	}
 
-	ClientSocket client;
+	Socket client;
 
 	if (!client.Connect(info.Get()))
 	{

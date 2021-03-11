@@ -12,7 +12,7 @@
 #include <chrono>
 
 #include "AddressInfo.hpp"
-#include "ClientSocket.hpp"
+#include "Socket.hpp"
 #include "LogWrap.hpp"
 
 #if defined(_WIN32) || defined(_WIN64)

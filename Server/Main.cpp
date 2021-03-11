@@ -50,10 +50,10 @@ int main(int, char**)
 		return 1;
 	}
 
-	ClientSocket client;
+	Socket client;
 
 	{
-		ServerSocket server;
+		Socket server;
 
 		if (!server.Bind(info.Get()))
 		{
